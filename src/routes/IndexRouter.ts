@@ -2,6 +2,8 @@ import express from 'express';
 import IndexController from '../controllers/IndexController';
 import UserController from '../controllers/UserController';
 import VehicleController from '../controllers/VehicleController';
+import UserMiddleware from '../middlewares/UserMiddleware';
+import VehicleMiddleware from '../middlewares/VehicleMiddleware';
 
 class ViewRouter{
 
@@ -24,25 +26,29 @@ class ViewRouter{
         express
         .route('/user/get')
         .get(
+            UserMiddleware.updateById,
             UserController.getById
         );
 
         express
         .route('/user/create')
         .post(
+            UserMiddleware.create,
             UserController.create
         );
 
         express
         .route('/user/update')
         .post(
-            UserController.update
+            UserMiddleware.updateById,
+            UserController.updateById
         );
 
         express
         .route('/user/delete')
         .post(
-            UserController.delete
+            UserMiddleware.deleteById,
+            UserController.deleteById
         );
 
         /* Vehicle */
@@ -50,25 +56,36 @@ class ViewRouter{
         express
         .route('/vehicle/get')
         .get(
+            VehicleMiddleware.getById,
             VehicleController.getById
+        );
+
+        express
+        .route('/vehicle/getAllByUser')
+        .get(
+            VehicleMiddleware.getAllByUser,
+            VehicleController.getAllByUser
         );
 
         express
         .route('/vehicle/create')
         .post(
+            VehicleMiddleware.create,
             VehicleController.create
         );
 
         express
         .route('/vehicle/update')
         .post(
-            VehicleController.update
+            VehicleMiddleware.updateById,
+            VehicleController.updateById
         );
 
         express
         .route('/vehicle/delete')
         .post(
-            VehicleController.delete
+            VehicleMiddleware.deleteById,
+            VehicleController.deleteById
         );
 
     }

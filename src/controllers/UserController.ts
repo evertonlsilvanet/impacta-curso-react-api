@@ -5,30 +5,55 @@ class UserController {
 
     public async getById(req: Request, res: Response){
 
-        const response = await UserService.getById();
-        
-        return res.send({"msg": "get user data"});
+        try {
+
+            const response = await UserService.getById(req.body);
+
+            return res.send(response);
+            
+        } catch (error) {
+            return res.status(400).send({"error": error});
+        }
     }
     
     public async create(req: Request, res: Response){
 
-        const response = await UserService.create();
+        try {
 
-        return res.send({"msg": "create user"});
+            const response = await UserService.create(req.body);
+
+            return res.send(response);
+            
+        } catch (error) {
+            return res.status(401).send({"error": error});
+        }
+
     }
 
-    public async update(req: Request, res: Response){
+    public async updateById(req: Request, res: Response){
 
-        const response = await UserService.update();
+        try {
 
-        return res.send({"msg": "update user"});
+            const response = await UserService.updateById(req.body);
+
+            return res.send(response);
+            
+        } catch (error) {
+            return res.status(400).send({"error": error});
+        }
     }
 
-    public async delete(req: Request, res: Response){
+    public async deleteById(req: Request, res: Response){
 
-        const response = await UserService.delete();
+        try {
 
-        return res.send({"msg": "delete user"});
+            const response = await UserService.deleteById(req.body);
+
+            return res.send(response);
+            
+        } catch (error) {
+            return res.status(400).send({"error": error});
+        }
     }
     
 } export default new UserController;
